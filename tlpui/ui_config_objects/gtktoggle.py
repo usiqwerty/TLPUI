@@ -1,6 +1,9 @@
 """Toggle config state."""
 
 from gi.repository import Gtk
+
+import tlpui.actions
+import tlpui.views.main_box
 from .. import mainui
 from .. import settings
 
@@ -29,7 +32,7 @@ def on_button_toggled(self: Gtk.CheckButton, configname: str, configwidget: Gtk.
         # Reset to default when intrinsic default gets reactivated
         if tlpobject.get_value() == "" and settings.tlpconfig_defaults[configname].is_enabled():
             tlpobject.set_value(settings.tlpconfig_defaults[configname].get_value())
-            mainui.load_tlp_config(self, window, False)
+            tlpui.views.main_box.load_tlp_config(self, window, False)
     else:
         tlpobject.set_enabled(False)
         configwidget.set_sensitive(False)

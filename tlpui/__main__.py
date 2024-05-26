@@ -8,7 +8,8 @@ from gi.repository import Gtk, Gdk, GLib
 from . import settings
 from .css import get_css_provider
 from .file import init_tlp_file_config
-from .mainui import create_main_box, store_window_size, window_key_events, close_main_window, reset_scroll_position
+from .mainui import window_key_events, close_main_window
+from tlpui.views.main_box import create_main_box
 
 Gtk.init()
 Gtk.StyleContext.add_provider_for_screen(
@@ -23,6 +24,12 @@ Gdk.set_program_class('Tlp-UI')
 
 # Apply custom scalable icons to icon theme
 Gtk.IconTheme().get_default().append_search_path(settings.icondir + 'themeable')
+
+
+def store_window_size(self) -> None:
+    """Store current window size in settings."""
+    settings.userconfig.windowxsize = self.get_size()[0]
+    settings.userconfig.windowysize = self.get_size()[1]
 
 
 def main() -> None:
@@ -40,9 +47,9 @@ def main() -> None:
     window.connect('delete-event', close_main_window)
     window.connect('key-press-event', window_key_events)
     window.show_all()
-    reset_scroll_position()
     Gtk.main()
 
 
 if __name__ == '__main__':
     main()
+

@@ -3,6 +3,9 @@
 from gi.repository import Gtk
 
 from collections import OrderedDict
+
+import tlpui.actions
+import tlpui.views.main_box
 from ..uihelper import get_theme_image
 from .. import mainui
 from .. import file
@@ -148,7 +151,7 @@ def edit_list(self: Gtk.Button, window: Gtk.Window):
         set_tlp_value('DISK_SPINDOWN_TIMEOUT_ON_BAT', spindowntimeoutonbat.lstrip())
         set_tlp_value('DISK_IOSCHED', iosched.lstrip())
 
-        mainui.load_tlp_config(self, window, False)
+        tlpui.views.main_box.load_tlp_config(self, window, False)
 
     dialog.destroy()
 
