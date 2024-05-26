@@ -1,4 +1,4 @@
-from tlpui.filehelper import extract_default_tlp_configs, get_yaml_schema_object_from_file
+from tlpui.config_parser.filehelper import extract_default_tlp_configs, get_yaml_schema_object_from_file
 from os import path
 
 

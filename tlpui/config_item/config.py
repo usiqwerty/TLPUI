@@ -1,7 +1,7 @@
 """TLP config."""
 
 from enum import Enum
-from .uihelper import StateImage
+from tlpui.uihelper import StateImage
 
 
 class ConfType(Enum):

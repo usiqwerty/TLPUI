@@ -1,6 +1,9 @@
 """This module provides general helper functions for the UI."""
 
 import gi
+
+import tlpui.views.dialogs
+
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, GdkPixbuf
 from shutil import which
@@ -8,7 +11,6 @@ from pathlib import Path
 from . import language
 from . import settings
 from . import constants
-from . import errorui
 
 
 EXPECTED_ITEM_MISSING_TEXT = language.UH_('Expected item missing in config file')  # type: str
@@ -30,7 +32,7 @@ def get_graphical_sudo() -> str:
 
         if sudo_exists:
             return sudo
-    errorui.show_dialog(SUDO_MISSING_TEXT)
+    tlpui.views.dialogs.show_dialog(SUDO_MISSING_TEXT)
     return None
 
 

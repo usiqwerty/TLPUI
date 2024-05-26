@@ -1,11 +1,10 @@
 from gi.repository import Gtk
 
 from tlpui import settings, language
-from tlpui.errorui import show_dialog
-from tlpui.file import get_changed_properties, create_tmp_tlp_config_file, write_tlp_config
-from tlpui.settingshelper import exec_command
+from tlpui.config_parser.file import get_changed_properties, create_tmp_tlp_config_file, write_tlp_config
+from tlpui.tlp_runner import exec_command
 from tlpui.uihelper import get_graphical_sudo
-from tlpui.views.dialogs import changed_items_dialog
+from tlpui.views.dialogs import changed_items_dialog, show_dialog
 
 
 def save_tlp_config(self, window) -> None:

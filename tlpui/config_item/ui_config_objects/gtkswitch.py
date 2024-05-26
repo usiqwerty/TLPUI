@@ -1,7 +1,7 @@
 """Switch widget."""
 
 from gi.repository import Gtk
-from .. import settings
+from tlpui import settings
 
 
 def create_state_switch(configname: str, values: str) -> Gtk.Switch:

@@ -5,12 +5,13 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 from collections import OrderedDict
-from . import settings
-from . import language
-from .ui_config_objects import gtkswitch, gtkentry, gtkselection, gtkmultiselection, gtkcheckbutton, gtkspinbutton, \
-    gtktoggle, gtkusblist, gtkpcilist, gtkdisklist, gtkdisklistview
-from .file import ConfType, TlpConfig, get_yaml_schema_object
-from .uihelper import get_theme_image, StateImage, EXPECTED_ITEM_MISSING_TEXT
+from tlpui import settings
+from tlpui import language
+from tlpui.config_item.ui_config_objects import gtkentry
+from tlpui.config_item.ui_config_objects import gtkspinbutton, gtkswitch, gtkcheckbutton, gtkpcilist, gtkdisklistview, \
+    gtkusblist, gtkselection, gtktoggle, gtkmultiselection, gtkdisklist
+from tlpui.config_parser.file import ConfType, TlpConfig, get_yaml_schema_object
+from tlpui.uihelper import get_theme_image, StateImage, EXPECTED_ITEM_MISSING_TEXT
 
 
 def store_category_num(self, cat, cat_num: int):

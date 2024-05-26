@@ -5,11 +5,13 @@ import re
 from io import open
 from os import access, W_OK, close, path
 from tempfile import mkstemp
-from .config import TlpConfig, ConfType
-from . import settings
-from . import settingshelper
+
+import tlpui.tlp_runner
+from tlpui.config_item.config import TlpConfig, ConfType
+from tlpui import settings
+from tlpui import settingshelper
 from .filehelper import get_yaml_schema_object_from_file, extract_default_tlp_configs, TlpDefaults
-from .uihelper import get_graphical_sudo
+from tlpui.uihelper import get_graphical_sudo
 
 
 def get_yaml_schema_object(objectname) -> dict:
@@ -39,7 +41,7 @@ def init_tlp_file_config() -> None:
     settings.tlpconfig_defaults = get_tlp_config_defaults(tlpversion)
 
     # get current settings from tlp itself
-    tlpstat = settingshelper.exec_command(["tlp-stat", "-c"])
+    tlpstat = tlpui.tlp_runner.exec_command(["tlp-stat", "-c"])
     tlpsettinglines = tlpstat.split('\n')
 
     extract_tlp_settings(tlpsettinglines)
@@ -160,4 +162,4 @@ def write_tlp_config(tmpconfigfile: str):
         if sudo_cmd is None:
             return
         sedcommand.insert(0, sudo_cmd)
-    settingshelper.exec_command(sedcommand)
+    tlpui.tlp_runner.exec_command(sedcommand)

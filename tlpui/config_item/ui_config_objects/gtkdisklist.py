@@ -5,12 +5,12 @@ from gi.repository import Gtk
 from collections import OrderedDict
 
 import tlpui.actions
+import tlpui.tlp_runner
 import tlpui.views.main_box
-from ..uihelper import get_theme_image
-from .. import mainui
-from .. import file
-from .. import settings
-from .. import settingshelper
+from tlpui.uihelper import get_theme_image
+from tlpui.config_parser import file
+from tlpui import settings
+from tlpui import settingshelper
 
 
 def create_list(configname: str, window: Gtk.Window) -> Gtk.Box:
@@ -39,7 +39,7 @@ def edit_list(self: Gtk.Button, window: Gtk.Window):
 
     disks = OrderedDict()
     keeps = OrderedDict()
-    disklist = settingshelper.exec_command(["tlp", "diskid"])
+    disklist = tlpui.tlp_runner.exec_command(["tlp", "diskid"])
     for line in disklist.splitlines():
         diskid = line.split(':')[0].lstrip().rstrip()
 

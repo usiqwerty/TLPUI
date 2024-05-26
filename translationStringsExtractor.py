@@ -2,7 +2,7 @@
 
 import os
 from io import open
-from tlpui.filehelper import get_yaml_schema_object_from_file
+from tlpui.config_parser.filehelper import get_yaml_schema_object_from_file
 
 lastvalue = ''
 

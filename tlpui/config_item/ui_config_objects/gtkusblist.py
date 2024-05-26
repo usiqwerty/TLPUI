@@ -4,9 +4,11 @@ import re
 from gi.repository import Gtk
 
 from collections import OrderedDict
-from .. import settings
-from .. import settingshelper
-from ..uihelper import get_theme_image
+
+import tlpui.tlp_runner
+from tlpui import settings
+from tlpui import settingshelper
+from tlpui.uihelper import get_theme_image
 
 global indexstore
 
@@ -34,7 +36,7 @@ def edit_list(self, configname: str, usblistlabel: Gtk.Label, window: Gtk.Window
         for item in tlpobject.get_value().split(' '):
             currentitems[item] = ["", True]
 
-    tlpusblist = settingshelper.exec_command(["lsusb"])
+    tlpusblist = tlpui.tlp_runner.exec_command(["lsusb"])
 
     usbitems = OrderedDict()
     for line in tlpusblist.splitlines():

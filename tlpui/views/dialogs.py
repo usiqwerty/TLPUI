@@ -3,6 +3,8 @@ import difflib
 from gi.repository import Gtk, GdkPixbuf
 
 from tlpui import settings, __version__, language
+import gi
+gi.require_version('Gtk', '3.0')
 
 
 def changed_items_dialog(window, tmpfilename: str, dialogtitle: str, message: str) -> Gtk.ResponseType:
@@ -66,3 +68,13 @@ def show_about_dialog(self):
     )
     aboutdialog.connect('response', lambda dialog, fata: dialog.destroy())
     aboutdialog.show_all()
+
+
+def show_dialog(error_message) -> None:
+    """Show error dialog."""
+    dialog = Gtk.MessageDialog()
+    dialog.set_default_size(150, 100)
+    dialog.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+    dialog.format_secondary_markup(error_message)
+    dialog.run()
+    dialog.destroy()

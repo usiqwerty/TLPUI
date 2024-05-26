@@ -1,7 +1,7 @@
 """Select UI widget."""
 
 from gi.repository import Gtk
-from .. import settings
+from tlpui import settings
 
 
 def create_selection_box(configname: str, values: str) -> Gtk.ComboBox:

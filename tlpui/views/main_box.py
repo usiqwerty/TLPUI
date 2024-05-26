@@ -1,10 +1,10 @@
 from gi.repository import Gtk
 
 from tlpui import language, settings
-from tlpui.configui import create_config_box
-from tlpui.file import init_tlp_file_config
+from tlpui.config_item.configui import create_config_box
+from tlpui.config_parser.file import init_tlp_file_config
 from tlpui.views.menu import create_menu_box
-from tlpui.statui import create_stat_box
+from tlpui.views.statui import create_stat_box
 from tlpui.views.settings_box import create_settings_box
 
 

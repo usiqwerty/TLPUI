@@ -7,7 +7,7 @@ from gi.repository import Gtk, Gdk, GLib
 
 from . import settings
 from .css import get_css_provider
-from .file import init_tlp_file_config
+from tlpui.config_parser.file import init_tlp_file_config
 from .mainui import window_key_events, close_main_window
 from tlpui.views.main_box import create_main_box
 

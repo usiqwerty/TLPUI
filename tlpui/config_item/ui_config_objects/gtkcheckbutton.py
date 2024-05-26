@@ -1,7 +1,7 @@
 """Checkbutton UI widget."""
 
 from gi.repository import Gtk
-from .. import settings
+from tlpui import settings
 
 
 def create_checkbutton_box(configname: str, values: str) -> Gtk.Box:

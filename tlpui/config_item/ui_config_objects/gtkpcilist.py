@@ -4,9 +4,11 @@ import re
 from gi.repository import Gtk
 
 from collections import OrderedDict
-from ..uihelper import get_theme_image
-from .. import settings
-from .. import settingshelper
+
+import tlpui.tlp_runner
+from tlpui.uihelper import get_theme_image
+from tlpui import settings
+from tlpui import settingshelper
 
 
 def create_list(configname: str, window: Gtk.Window) -> Gtk.Box:
@@ -29,7 +31,7 @@ def edit_list(self, configname: str, usblistlabel: Gtk.Label, window: Gtk.Window
     pcilistpattern = re.compile(r'^([a-f\d]{2}:[a-f\d]{2}\.[a-f\d])(.+?)$')
     currentitems = tlpobject.get_value().split(' ')
 
-    tlppcilist = settingshelper.exec_command(["lspci"])
+    tlppcilist = tlpui.tlp_runner.exec_command(["lspci"])
 
     pciitems = OrderedDict()
     for line in tlppcilist.splitlines():

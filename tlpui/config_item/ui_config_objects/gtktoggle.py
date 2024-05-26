@@ -4,8 +4,8 @@ from gi.repository import Gtk
 
 import tlpui.actions
 import tlpui.views.main_box
-from .. import mainui
-from .. import settings
+from tlpui import mainui
+from tlpui import settings
 
 
 def create_toggle_button(configname: str, configwidget: Gtk.Widget, window: Gtk.Window) -> Gtk.CheckButton:

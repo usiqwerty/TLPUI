@@ -2,6 +2,8 @@
 
 from os import path, getenv
 from pathlib import Path
+
+import tlpui.tlp_runner
 from . import settingshelper
 
 # application folder settings
@@ -15,7 +17,7 @@ FOLDER_PREFIX = "/var/run/host" if IS_FLATPAK else ""
 TMP_FOLDER = f"{getenv('XDG_RUNTIME_DIR')}/app/{getenv('FLATPAK_ID')}" if IS_FLATPAK else None
 
 # check for required commands to exist
-settingshelper.check_binaries_exist(FOLDER_PREFIX)
+tlpui.tlp_runner.check_binaries_exist(FOLDER_PREFIX)
 
 # user config
 userconfig = settingshelper.UserConfig()

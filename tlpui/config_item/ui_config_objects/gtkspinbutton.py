@@ -1,7 +1,7 @@
 """Numeric range UI widget."""
 
 from gi.repository import Gtk
-from .. import settings
+from tlpui import settings
 
 
 def create_numeric_spinbutton(configname: str, values: str) -> Gtk.SpinButton:

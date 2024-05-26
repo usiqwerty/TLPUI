@@ -1,18 +1,21 @@
 """This module provides general tlp-stat functions for the UI."""
 
 import gi
+
+import tlpui.tlp_runner
+
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
-from . import language
-from . import settingshelper
-from .uihelper import get_theme_image, get_graphical_sudo
+from tlpui import language
+from tlpui import settingshelper
+from tlpui.uihelper import get_theme_image, get_graphical_sudo
 
 
 def fetch_simple_stats(_, textbuffer: Gtk.TextBuffer) -> None:
     """Fetch simple tlp-stat information."""
     simple_stat_command = ["tlp-stat", "-r", "-t", "-c", "-s", "-u"]
-    tlp_stat_output = settingshelper.exec_command(simple_stat_command)
+    tlp_stat_output = tlpui.tlp_runner.exec_command(simple_stat_command)
     textbuffer.set_text(tlp_stat_output)
 
 
@@ -23,7 +26,7 @@ def fetch_complete_stats(_, textbuffer: Gtk.TextBuffer) -> None:
     if sudo_cmd is None:
         return
 
-    tlp_stat_output = settingshelper.exec_command([sudo_cmd, "tlp-stat"])
+    tlp_stat_output = tlpui.tlp_runner.exec_command([sudo_cmd, "tlp-stat"])
     textbuffer.set_text(tlp_stat_output)
 
 

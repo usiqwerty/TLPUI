@@ -1,7 +1,7 @@
 """Disk view UI widget."""
 
 from gi.repository import Gtk
-from .. import settings
+from tlpui import settings
 
 
 def create_view(configname: str) -> Gtk.Box:
