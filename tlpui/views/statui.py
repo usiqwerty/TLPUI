@@ -8,7 +8,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 from tlpui import language
-from tlpui import settingshelper
+from tlpui import settings_loader
 from tlpui.uihelper import get_theme_image, get_graphical_sudo
 
 

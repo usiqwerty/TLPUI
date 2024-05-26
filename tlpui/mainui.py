@@ -2,7 +2,7 @@
 
 from gi.repository import Gdk
 
-from .actions import save_tlp_config, quit_tlp_config
+from .config_actions import save_tlp_config, quit_tlp_config
 
 
 def window_key_events(self, event) -> None:

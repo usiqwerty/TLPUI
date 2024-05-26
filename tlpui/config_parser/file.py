@@ -7,9 +7,8 @@ from os import access, W_OK, close, path
 from tempfile import mkstemp
 
 import tlpui.tlp_runner
-from tlpui.config_item.config import TlpConfig, ConfType
+from tlpui.tlp_config.config_item import TlpConfigItem, ConfType
 from tlpui import settings
-from tlpui import settingshelper
 from .filehelper import get_yaml_schema_object_from_file, extract_default_tlp_configs, TlpDefaults
 from tlpui.uihelper import get_graphical_sudo
 
@@ -52,7 +51,7 @@ def init_tlp_file_config() -> None:
         if configname not in settings.tlpconfig.keys():
             enabled = default.is_enabled()
             value = default.get_value()
-            settings.tlpconfig[configname] = TlpConfig(enabled, configname, value, ConfType.DEFAULT, "")
+            settings.tlpconfig[configname] = TlpConfigItem(enabled, configname, value, ConfType.DEFAULT, "")
 
     # finally store copy for comparing changes
     settings.tlpconfig_original = copy.deepcopy(settings.tlpconfig)
@@ -86,7 +85,7 @@ def extract_tlp_settings(lines: list) -> None:
 
             enabled = configvalue != ""
 
-            settings.tlpconfig[configname] = TlpConfig(enabled, configname, configvalue, conftype, configfile)
+            settings.tlpconfig[configname] = TlpConfigItem(enabled, configname, configvalue, conftype, configfile)
 
 
 def get_changed_properties() -> dict:
@@ -97,8 +96,8 @@ def get_changed_properties() -> dict:
     original = settings.tlpconfig_original
 
     for configid in changed:
-        config = changed[configid]              # type: TlpConfig
-        config_original = original[configid]    # type: TlpConfig
+        config = changed[configid]              # type: TlpConfigItem
+        config_original = original[configid]    # type: TlpConfigItem
 
         statechange = config.is_enabled() != config_original.is_enabled()
         configchange = config.get_value() != config_original.get_value()

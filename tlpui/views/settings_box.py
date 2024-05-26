@@ -1,7 +1,7 @@
 from gi.repository import Gtk
 
 from tlpui import settings, language
-from tlpui.actions import save_tlp_config, run_tlp
+from tlpui.config_actions import save_tlp_config, run_tlp
 # from tlpui.views.main_box import load_tlp_config
 from tlpui.uihelper import get_theme_image
 

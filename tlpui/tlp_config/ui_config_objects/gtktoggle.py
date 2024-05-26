@@ -2,7 +2,7 @@
 
 from gi.repository import Gtk
 
-import tlpui.actions
+import tlpui.config_actions
 import tlpui.views.main_box
 from tlpui import mainui
 from tlpui import settings

@@ -13,7 +13,7 @@ class ConfType(Enum):
     ERR = 4
 
 
-class TlpConfig:
+class TlpConfigItem:
     """TLP config class."""
 
     def __init__(self, enabled: bool, name: str, value: str, conftype: ConfType, confpath=""):

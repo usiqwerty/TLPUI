@@ -4,13 +4,13 @@ from gi.repository import Gtk
 
 from collections import OrderedDict
 
-import tlpui.actions
+import tlpui.config_actions
 import tlpui.tlp_runner
 import tlpui.views.main_box
 from tlpui.uihelper import get_theme_image
 from tlpui.config_parser import file
 from tlpui import settings
-from tlpui import settingshelper
+from tlpui import settings_loader
 
 
 def create_list(configname: str, window: Gtk.Window) -> Gtk.Box:

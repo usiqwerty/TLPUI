@@ -5,7 +5,7 @@ from gi.repository import Gtk
 
 from tlpui import language, settings
 from tlpui.views.dialogs import show_about_dialog
-from tlpui.actions import save_tlp_config, quit_tlp_config
+from tlpui.config_actions import save_tlp_config, quit_tlp_config
 
 from tlpui.uihelper import get_flag_image
 # from tlpui.views.main_box import load_tlp_config

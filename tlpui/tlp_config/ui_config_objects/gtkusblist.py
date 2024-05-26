@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 import tlpui.tlp_runner
 from tlpui import settings
-from tlpui import settingshelper
+from tlpui import settings_loader
 from tlpui.uihelper import get_theme_image
 
 global indexstore

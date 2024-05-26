@@ -2,14 +2,14 @@ import pytest
 import linecache
 import shutil
 import os
-from tlpui import settingshelper
+from tlpui import settings_loader
 
 
 @pytest.fixture
 def with_broken_config(request):
     settings_path = os.path.dirname(os.path.abspath(__file__)) + '/settings_default'
     os.environ['XDG_CONFIG_HOME'] = settings_path
-    userconfig = settingshelper.UserConfig()
+    userconfig = settings_loader.UserConfig()
     userconfig.userconfigfile.write_text("[default]")
     userconfig.read_user_config()
 
@@ -24,7 +24,7 @@ def with_broken_config(request):
 def with_new_config(request):
     settings_path = os.path.dirname(os.path.abspath(__file__)) + '/settings_creation'
     os.environ['XDG_CONFIG_HOME'] = settings_path
-    userconfig = settingshelper.UserConfig()
+    userconfig = settings_loader.UserConfig()
 
     def clean_config_file():
         shutil.rmtree(settings_path)

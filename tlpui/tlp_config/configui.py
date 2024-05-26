@@ -1,16 +1,17 @@
 """Create TLP config UI."""
 
 import gi
+
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 from collections import OrderedDict
 from tlpui import settings
 from tlpui import language
-from tlpui.config_item.ui_config_objects import gtkentry
-from tlpui.config_item.ui_config_objects import gtkspinbutton, gtkswitch, gtkcheckbutton, gtkpcilist, gtkdisklistview, \
+from tlpui.tlp_config.ui_config_objects import gtkentry
+from tlpui.tlp_config.ui_config_objects import gtkspinbutton, gtkswitch, gtkcheckbutton, gtkpcilist, gtkdisklistview, \
     gtkusblist, gtkselection, gtktoggle, gtkmultiselection, gtkdisklist
-from tlpui.config_parser.file import ConfType, TlpConfig, get_yaml_schema_object
+from tlpui.config_parser.file import ConfType, TlpConfigItem, get_yaml_schema_object
 from tlpui.uihelper import get_theme_image, StateImage, EXPECTED_ITEM_MISSING_TEXT
 
 
@@ -102,7 +103,7 @@ def init_state_image(configname: str):
 
 def get_type_image(configname: str) -> Gtk.Image:
     """Create config location image."""
-    tlpconfig = settings.tlpconfig[configname]      # type: TlpConfig
+    tlpconfig = settings.tlpconfig[configname]  # type: TlpConfigItem
     conftype = tlpconfig.get_conf_type()
     conftypeimage = Gtk.Image()
 
@@ -130,7 +131,7 @@ def create_item_box(configobjects: list, doc: str, grouptitle: str, window) -> G
 
         configuibox.pack_start(grouplabel, False, False, 0)
 
-    for configobject in configobjects:      # type: ConfigObject
+    for configobject in configobjects:  # type: ConfigObject
         configname = configobject.name
         stateimage = init_state_image(configname)
         tlpuiobject = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=18)
