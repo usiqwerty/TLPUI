@@ -18,13 +18,13 @@ def get_yaml_schema_object(objectname) -> dict:
     tlpprovidedschema = '/usr/share/tlp-pm/configschema.yaml'
     if path.exists(tlpprovidedschema):
         return get_yaml_schema_object_from_file(objectname, tlpprovidedschema)
-    majorminor = settings.tlpbaseversion
-    return get_yaml_schema_object_from_file(objectname, f"{settings.workdir}/configschema/{majorminor}.yaml")
+    majorminor = settings.tlp_base_version
+    return get_yaml_schema_object_from_file(objectname, f"{settings.work_dir}/configschema/{majorminor}.yaml")
 
 
 def get_tlp_config_defaults(tlpversion: str):
     """Fetch TLP default configs."""
-    tlpconfig_defaults = extract_default_tlp_configs(f"{settings.workdir}/defaults/tlp-{tlpversion}.conf")
+    tlpconfig_defaults = extract_default_tlp_configs(f"{settings.work_dir}/defaults/tlp-{tlpversion}.conf")
 
     # update default values with intrinsic ones
     intrinsic_defaults_path = f"{settings.FOLDER_PREFIX}/usr/share/tlp/defaults.conf"
@@ -35,9 +35,9 @@ def get_tlp_config_defaults(tlpversion: str):
 
 def init_tlp_file_config() -> None:
     """Load current TLP config settings."""
-    settings.tlpconfig = {}
-    tlpversion = settings.tlpbaseversion
-    settings.tlpconfig_defaults = get_tlp_config_defaults(tlpversion)
+    settings.tlp_config = {}
+    tlpversion = settings.tlp_base_version
+    settings.tlp_config_defaults = get_tlp_config_defaults(tlpversion)
 
     # get current settings from tlp itself
     tlpstat = tlpui.tlp_runner.exec_command(["tlp-stat", "-c"])
@@ -46,15 +46,15 @@ def init_tlp_file_config() -> None:
     extract_tlp_settings(tlpsettinglines)
 
     # Add default tlp configs not set in current settings
-    for key, default in settings.tlpconfig_defaults.items():     # type: TlpDefaults
+    for key, default in settings.tlp_config_defaults.items():     # type: TlpDefaults
         configname = default.get_name()
-        if configname not in settings.tlpconfig.keys():
+        if configname not in settings.tlp_config.keys():
             enabled = default.is_enabled()
             value = default.get_value()
-            settings.tlpconfig[configname] = TlpConfigItem(enabled, configname, value, ConfType.DEFAULT, "")
+            settings.tlp_config[configname] = TlpConfigItem(enabled, configname, value, ConfType.DEFAULT, "")
 
     # finally store copy for comparing changes
-    settings.tlpconfig_original = copy.deepcopy(settings.tlpconfig)
+    settings.tlp_config_original = copy.deepcopy(settings.tlp_config)
 
 
 def extract_tlp_settings(lines: list) -> None:
@@ -85,15 +85,15 @@ def extract_tlp_settings(lines: list) -> None:
 
             enabled = configvalue != ""
 
-            settings.tlpconfig[configname] = TlpConfigItem(enabled, configname, configvalue, conftype, configfile)
+            settings.tlp_config[configname] = TlpConfigItem(enabled, configname, configvalue, conftype, configfile)
 
 
 def get_changed_properties() -> dict:
     """Evaluate changed settings from UI."""
     changedproperties = {}
 
-    changed = settings.tlpconfig
-    original = settings.tlpconfig_original
+    changed = settings.tlp_config
+    original = settings.tlp_config_original
 
     for configid in changed:
         config = changed[configid]              # type: TlpConfigItem
@@ -106,12 +106,12 @@ def get_changed_properties() -> dict:
             configname = config.get_name()
             value = config.get_value()
 
-            if not config.is_enabled() and settings.tlpconfig_defaults[configname].is_enabled():
+            if not config.is_enabled() and settings.tlp_config_defaults[configname].is_enabled():
                 enabled = ""
             else:
                 enabled = "" if config.is_enabled() else "#"
 
-            if settings.tlpconfig_defaults[configname].is_quoted():
+            if settings.tlp_config_defaults[configname].is_quoted():
                 value = f"\"{value}\""
 
             changedproperties[configname] = f"{enabled}{configname}={value}"
@@ -125,7 +125,7 @@ def create_tmp_tlp_config_file(changedproperties: dict) -> str:
     filehandler, tmpfilename = mkstemp(dir=settings.TMP_FOLDER)
     newfile = open(tmpfilename, mode='w', encoding='utf-8')
 
-    oldfile = open(settings.tlpconfigfile, encoding='utf-8')
+    oldfile = open(settings.tlp_config_file, encoding='utf-8')
     lines = oldfile.readlines()
     oldfile.close()
 
@@ -152,11 +152,11 @@ def create_tmp_tlp_config_file(changedproperties: dict) -> str:
 
 def write_tlp_config(tmpconfigfile: str):
     """Write changes to config file."""
-    sedtlpconfigfile = "w" + settings.tlpbaseconfigfile
+    sedtlpconfigfile = "w" + settings.tlp_base_config_file
     sedcommand = ["sed", "-n", sedtlpconfigfile, tmpconfigfile]
 
     # check permission and apply sudo if needed
-    if not access(settings.tlpconfigfile, W_OK):
+    if not access(settings.tlp_config_file, W_OK):
         sudo_cmd = get_graphical_sudo()
         if sudo_cmd is None:
             return

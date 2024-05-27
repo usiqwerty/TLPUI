@@ -9,51 +9,51 @@ from tlpui.views.dialogs import changed_items_dialog, show_dialog
 
 def save_tlp_config(self, window) -> None:
     """Persist TLP configuration changes."""
-    changedproperties = get_changed_properties()
-    if len(changedproperties) == 0:
+    changed_properties = get_changed_properties()
+    if len(changed_properties) == 0:
         return
 
-    tmpfilename = create_tmp_tlp_config_file(changedproperties)
+    tmp_filename = create_tmp_tlp_config_file(changed_properties)
 
-    saveresponse = changed_items_dialog(
+    save_response = changed_items_dialog(
         window,
-        tmpfilename,
+        tmp_filename,
         language.MT_('Review settings'),
         language.MT_('Save these changes?'))
 
-    if saveresponse == Gtk.ResponseType.OK:
-        write_tlp_config(tmpfilename)
+    if save_response == Gtk.ResponseType.OK:
+        write_tlp_config(tmp_filename)
 
-        #TODO: why?
-        ## reload config after file save
-        #load_tlp_config(self, window, True)
+        # TODO: why?
+        # # reload config after file save
+        # load_tlp_config(self, window, True)
 
 
 def quit_tlp_config(_, window) -> None:
     """Quit TLPUI and prompt for unsaved changes."""
-    settings.userconfig.write_user_config()
+    settings.user_config.write_user_config()
 
-    changedproperties = get_changed_properties()
-    if len(changedproperties) == 0:
+    changed_properties = get_changed_properties()
+    if len(changed_properties) == 0:
         Gtk.main_quit()
         return
 
-    tmpfilename = create_tmp_tlp_config_file(changedproperties)
+    tmp_filename = create_tmp_tlp_config_file(changed_properties)
 
-    quitresponse = changed_items_dialog(
+    quit_response = changed_items_dialog(
         window,
-        tmpfilename,
+        tmp_filename,
         language.MT_('Unsaved settings'),
         language.MT_('Do you really want to quit? No changes will be saved'))
 
-    if quitresponse == Gtk.ResponseType.OK:
+    if quit_response == Gtk.ResponseType.OK:
         Gtk.main_quit()
 
 
 def run_tlp(self, window) -> None:
     """Run TLP service."""
-    changedproperties = get_changed_properties()
-    if len(changedproperties) != 0:
+    changed_properties = get_changed_properties()
+    if len(changed_properties) != 0:
         save_tlp_config(self, window)
     sudo_cmd=get_graphical_sudo()
     output = exec_command([sudo_cmd, "tlp", "start"])

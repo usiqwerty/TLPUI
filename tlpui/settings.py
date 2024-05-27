@@ -7,9 +7,9 @@ import tlpui.tlp_runner
 from . import settings_loader
 
 # application folder settings
-workdir = path.dirname(path.abspath(__file__))
-langdir = f'{workdir}/lang/'
-icondir = f'{workdir}/icons/'
+work_dir = path.dirname(path.abspath(__file__))
+lang_dir = f'{work_dir}/lang/'
+icon_dir = f'{work_dir}/icons/'
 
 # flatpak related params
 IS_FLATPAK = Path("/.flatpak-info").exists()
@@ -19,15 +19,14 @@ TMP_FOLDER = f"{getenv('XDG_RUNTIME_DIR')}/app/{getenv('FLATPAK_ID')}" if IS_FLA
 # check for required commands to exist
 tlpui.tlp_runner.check_binaries_exist(FOLDER_PREFIX)
 
-# user config
-userconfig = settings_loader.UserConfig()
+user_config = settings_loader.UserConfig()
 
 # runtime params
-tlpversion = settings_loader.get_installed_tlp_version()
-tlpbaseversion = tlpversion.replace(".", "_")[0:3]
-tlpbaseconfigfile = settings_loader.get_tlp_config_file("")
-tlpconfigfile = settings_loader.get_tlp_config_file(FOLDER_PREFIX)
-tlpconfig = {}
-tlpconfig_original = {}
-tlpconfig_defaults = {}
+tlp_version = settings_loader.get_installed_tlp_version()
+tlp_base_version = tlp_version.replace(".", "_")[0:3]
+tlp_base_config_file = settings_loader.get_tlp_config_file("")
+tlp_config_file = settings_loader.get_tlp_config_file(FOLDER_PREFIX)
+tlp_config = {}
+tlp_config_original = {}
+tlp_config_defaults = {}
 active_scroll = None

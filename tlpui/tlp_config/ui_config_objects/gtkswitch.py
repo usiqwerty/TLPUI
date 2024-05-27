@@ -12,7 +12,7 @@ def create_state_switch(configname: str, values: str) -> Gtk.Switch:
     falseitem = toggleitems[0]
     trueitem = toggleitems[1]
 
-    if settings.tlpconfig[configname].get_value() == trueitem:
+    if settings.tlp_config[configname].get_value() == trueitem:
         switch.set_active(True)
     else:
         switch.set_active(False)
@@ -23,7 +23,7 @@ def create_state_switch(configname: str, values: str) -> Gtk.Switch:
 
 def change_switch_state(self: Gtk.Switch, notify, configname: str, falseitem: str, trueitem: str):
     """Process and store state change."""
-    tlpobject = settings.tlpconfig[configname]
+    tlpobject = settings.tlp_config[configname]
 
     if self.get_active():
         tlpobject.set_value(trueitem)

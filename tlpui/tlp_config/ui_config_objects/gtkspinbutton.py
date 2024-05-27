@@ -7,7 +7,7 @@ from tlpui import settings
 def create_numeric_spinbutton(configname: str, values: str) -> Gtk.SpinButton:
     """Create spin button with range."""
     valuerange = values.split('-')
-    configvalue = settings.tlpconfig[configname].get_value()
+    configvalue = settings.tlp_config[configname].get_value()
     adjustment = Gtk.Adjustment(0, float(valuerange[0]), float(valuerange[1]), 1, 10, 0)
 
     spinbutton = Gtk.SpinButton()
@@ -22,4 +22,4 @@ def create_numeric_spinbutton(configname: str, values: str) -> Gtk.SpinButton:
 def change_numeric_spin_value(self: Gtk.SpinButton, configname: str):
     """Process and store state change."""
     newvalue = str(int(self.get_value()))
-    settings.tlpconfig[configname].set_value(newvalue)
+    settings.tlp_config[configname].set_value(newvalue)

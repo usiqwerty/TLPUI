@@ -8,7 +8,7 @@ def create_checkbutton_box(configname: str, values: str) -> Gtk.Box:
     """Create checkbutton box."""
     checkbox = Gtk.Box()
     checkitems = values.split(',')
-    configvalue = settings.tlpconfig[configname].get_value()
+    configvalue = settings.tlp_config[configname].get_value()
 
     checkbuttonitem = 0
     for checkitem in checkitems:
@@ -30,7 +30,7 @@ def change_check_state(self: Gtk.CheckButton, configname: str, checkitems: []):
     """Process and store state change."""
     currentitem = self.get_label()
     currentstate = self.get_active()
-    currentvalue = str(settings.tlpconfig[configname].get_value())
+    currentvalue = str(settings.tlp_config[configname].get_value())
 
     newvalue = ''
     for checkitem in checkitems:
@@ -39,4 +39,4 @@ def change_check_state(self: Gtk.CheckButton, configname: str, checkitems: []):
         elif checkitem in currentvalue or checkitem == currentitem:
             newvalue = newvalue + " " + checkitem
 
-    settings.tlpconfig[configname].set_value(newvalue.lstrip())
+    settings.tlp_config[configname].set_value(newvalue.lstrip())

@@ -16,19 +16,19 @@ def get_tlp_config_file(prefix: str) -> str:
 def get_installed_tlp_version() -> str:
     """Fetch tlp version from command."""
     pattern = re.compile(r"TLP ([^\s]+)")
-    currentconfig = exec_command(["tlp-stat", "-c"])
-    matcher = pattern.search(currentconfig)
+    current_config = exec_command(["tlp-stat", "-c"])
+    matcher = pattern.search(current_config)
     return matcher.group(1)
 
 
 def get_user_config_file() -> Path:
     """Get config path for executing user."""
-    userconfighome = getenv("XDG_CONFIG_HOME", "")
-    if userconfighome == "":
-        userconfigpath = Path(str(Path.home()) + "/.config/tlpui")
+    user_config_home = getenv("XDG_CONFIG_HOME", "")
+    if user_config_home == "":
+        user_config_path = Path(str(Path.home()) + "/.config/tlpui")
     else:
-        userconfigpath = Path(str(userconfighome) + "/tlpui")
-    return Path(str(userconfigpath) + "/tlpui.cfg")
+        user_config_path = Path(str(user_config_home) + "/tlpui")
+    return Path(str(user_config_path) + "/tlpui.cfg")
 
 
 class UserConfig:
@@ -38,31 +38,31 @@ class UserConfig:
         """Init user config class parameters."""
         self.language = "en_EN"
         self.active_page = 0
-        self.activecategory = 0
-        self.activeposition = 0
-        self.windowxsize = 900
-        self.windowysize = 600
-        self.userconfigfile = get_user_config_file()
+        self.active_category = 0
+        self.active_position = 0
+        self.window_width = 900
+        self.window_height = 600
+        self.user_config_file = get_user_config_file()
         self.read_user_config()
 
     def read_user_config(self):
         """Read ui config parameters from user home."""
-        if self.userconfigfile.exists():
+        if self.user_config_file.exists():
             config = configparser.ConfigParser()
-            with open(str(self.userconfigfile), encoding='utf-8') as configfile:
+            with open(str(self.user_config_file), encoding='utf-8') as configfile:
                 config.read_file(configfile)
             try:
                 self.language = config['default']['language']
                 self.active_page = int(config['default']['activeoption'])
-                self.activecategory = int(config['default']['activecategory'])
-                self.activeposition = float(config['default']['activeposition'])
-                self.windowxsize = int(config['default']['windowxsize'])
-                self.windowysize = int(config['default']['windowysize'])
+                self.active_category = int(config['default']['activecategory'])
+                self.active_position = float(config['default']['activeposition'])
+                self.window_width = int(config['default']['windowxsize'])
+                self.window_height = int(config['default']['windowysize'])
             except KeyError:
                 # Config key error, override with default values
                 self.write_user_config()
         else:
-            self.userconfigfile.parent.mkdir(parents=True, exist_ok=True)
+            self.user_config_file.parent.mkdir(parents=True, exist_ok=True)
             self.write_user_config()
 
     def write_user_config(self):
@@ -71,9 +71,9 @@ class UserConfig:
         config['default'] = {}
         config['default']['language'] = self.language
         config['default']['activeoption'] = str(self.active_page)
-        config['default']['activecategory'] = str(self.activecategory)
-        config['default']['activeposition'] = str(self.activeposition)
-        config['default']['windowxsize'] = str(self.windowxsize)
-        config['default']['windowysize'] = str(self.windowysize)
-        with open(str(self.userconfigfile), mode='w', encoding='utf-8') as configfile:
+        config['default']['activecategory'] = str(self.active_category)
+        config['default']['activeposition'] = str(self.active_position)
+        config['default']['windowxsize'] = str(self.window_width)
+        config['default']['windowysize'] = str(self.window_height)
+        with open(str(self.user_config_file), mode='w', encoding='utf-8') as configfile:
             config.write(configfile)

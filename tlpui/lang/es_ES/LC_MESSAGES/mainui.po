@@ -15,60 +15,60 @@ msgstr ""
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: MT_\n"
-"X-Poedit-SearchPath-0: mainui.py\n"
+"X-Poedit-SearchPath-0: window_events.py\n"
 
-#: mainui.py:87
+#: window_events.py:87
 msgid "Review settings"
 msgstr "Ver la configuración"
 
-#: mainui.py:88
+#: window_events.py:88
 msgid "Save these changes?"
 msgstr "¿Quiere guardar los cambios?"
 
-#: mainui.py:111
+#: window_events.py:111
 msgid "Unsaved settings"
 msgstr "Ajustes sin guardar"
 
-#: mainui.py:112
+#: window_events.py:112
 msgid "Do you really want to quit? No changes will be saved"
 msgstr "¿Seguro que quiere salir? No se guardará ningún cambio"
 
-#: mainui.py:231
+#: window_events.py:231
 msgid "Reload"
 msgstr "Recargar"
 
-#: mainui.py:235 mainui.py:252
+#: window_events.py:235 window_events.py:252
 msgid "Save"
 msgstr "Guardar"
 
-#: mainui.py:250
+#: window_events.py:250
 msgid "File"
 msgstr "Archivo"
 
-#: mainui.py:255
+#: window_events.py:255
 msgid "Quit"
 msgstr "Salir"
 
-#: mainui.py:259
+#: window_events.py:259
 msgid "Language"
 msgstr "Idioma"
 
-#: mainui.py:265
+#: window_events.py:265
 msgid "Help"
 msgstr "Help"
 
-#: mainui.py:268
+#: window_events.py:268
 msgid "About"
 msgstr "About"
 
-#: mainui.py:292
+#: window_events.py:292
 msgid "UI for TLP written in Python/Gtk"
 msgstr "UI for TLP written in Python/Gtk"
 
-#: mainui.py:337
+#: window_events.py:337
 msgid "Configuration"
 msgstr "Configuración"
 
-#: mainui.py:340
+#: window_events.py:340
 msgid "Statistics"
 msgstr "Estadísticas"

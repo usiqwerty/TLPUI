@@ -8,7 +8,7 @@ def create_multi_selection_box(configname: str, values: str) -> Gtk.ComboBox:
     """Create multi select box."""
     multiselectbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
     multiselectitems = values.split(',')
-    configitems = settings.tlpconfig[configname].get_value().split(' ')
+    configitems = settings.tlp_config[configname].get_value().split(' ')
 
     for selectitem in multiselectitems:
         toggle = Gtk.ToggleButton(selectitem)
@@ -25,7 +25,7 @@ def change_selection_state(self: Gtk.ToggleButton, configname: str, checkitems: 
     """Process and store state change."""
     currentitem = self.get_label()
     currentstate = self.get_active()
-    currentvalue = str(settings.tlpconfig[configname].get_value())
+    currentvalue = str(settings.tlp_config[configname].get_value())
 
     newvalue = ''
     for checkitem in checkitems:
@@ -34,4 +34,4 @@ def change_selection_state(self: Gtk.ToggleButton, configname: str, checkitems: 
         elif checkitem in currentvalue or checkitem == currentitem:
             newvalue = newvalue + " " + checkitem
 
-    settings.tlpconfig[configname].set_value(newvalue.lstrip())
+    settings.tlp_config[configname].set_value(newvalue.lstrip())

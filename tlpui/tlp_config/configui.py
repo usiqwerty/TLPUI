@@ -15,14 +15,14 @@ from tlpui.uihelper import StateImage
 
 def store_category_num(self, cat, cat_num: int):
     """Store selected config category."""
-    settings.userconfig.activecategory = cat_num
+    settings.user_config.active_category = cat_num
     # settings.userconfig.activeposition = self.get_children()[cat_num].get_vadjustment().get_value()
     settings.active_scroll = self.get_children()[cat_num]
 
 
 def store_scroll_position(self, event):
     """Store current scrolled position."""
-    settings.userconfig.activeposition = self.get_vadjustment().get_value()
+    settings.user_config.active_position = self.get_vadjustment().get_value()
 
 
 def create_config_widget(configname: str, objecttype: str, objectvalues: str, window: Gtk.Window) -> Gtk.Widget:
@@ -56,23 +56,23 @@ def create_config_widget(configname: str, objecttype: str, objectvalues: str, wi
 def init_state_image(configname: str):
     """Create and store state image."""
     image = Gtk.Image()
-    defaultvalue = settings.tlpconfig_defaults[configname].get_value()
-    defaultstate = settings.tlpconfig_defaults[configname].is_enabled()
-    settings.tlpconfig[configname].add_state_image(StateImage(defaultvalue, defaultstate, image))
+    defaultvalue = settings.tlp_config_defaults[configname].get_value()
+    defaultstate = settings.tlp_config_defaults[configname].is_enabled()
+    settings.tlp_config[configname].add_state_image(StateImage(defaultvalue, defaultstate, image))
     return image
 
 
 def get_type_image(configname: str) -> Gtk.Image:
     """Create config location image."""
-    tlpconfig = settings.tlpconfig[configname]  # type: TlpConfigItem
+    tlpconfig = settings.tlp_config[configname]  # type: TlpConfigItem
     conftype = tlpconfig.get_conf_type()
     conftypeimage = Gtk.Image()
 
     if conftype == ConfType.DROPIN:
-        conftypeimage = Gtk.Image.new_from_file(f'{settings.icondir}dropin.svg')
+        conftypeimage = Gtk.Image.new_from_file(f'{settings.icon_dir}dropin.svg')
         conftypeimage.set_tooltip_text(tlpconfig.get_conf_path())
     elif conftype == ConfType.USER:
-        conftypeimage = Gtk.Image.new_from_file(f'{settings.icondir}user.svg')
+        conftypeimage = Gtk.Image.new_from_file(f'{settings.icon_dir}user.svg')
         conftypeimage.set_tooltip_text(tlpconfig.get_conf_path())
 
     return conftypeimage

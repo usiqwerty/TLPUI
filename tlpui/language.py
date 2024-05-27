@@ -4,17 +4,17 @@ from . import settings
 import gettext
 
 
-def load_lang(langfile):
+def load_lang(lang_file):
     """Load language from file."""
-    translation = gettext.translation(langfile, settings.langdir, [settings.userconfig.language])
+    translation = gettext.translation(lang_file, settings.lang_dir, [settings.user_config.language])
 
-    versionlangfile = f"{langfile}{settings.tlpbaseversion}"
-    if gettext.find(versionlangfile, settings.langdir, [settings.userconfig.language]) is None:
+    version_lang_file = f"{lang_file}{settings.tlp_base_version}"
+    if gettext.find(version_lang_file, settings.lang_dir, [settings.user_config.language]) is None:
         return translation.gettext
 
-    versiontranslation = gettext.translation(versionlangfile, settings.langdir, [settings.userconfig.language])
-    versiontranslation.add_fallback(translation)
-    return versiontranslation.gettext
+    version_translation = gettext.translation(version_lang_file, settings.lang_dir, [settings.user_config.language])
+    version_translation.add_fallback(translation)
+    return version_translation.gettext
 
 
 CDT_ = load_lang('configdescriptions')

@@ -10,14 +10,14 @@ def with_broken_config(request):
     settings_path = os.path.dirname(os.path.abspath(__file__)) + '/settings_default'
     os.environ['XDG_CONFIG_HOME'] = settings_path
     userconfig = settings_loader.UserConfig()
-    userconfig.userconfigfile.write_text("[default]")
+    userconfig.user_config_file.write_text("[default]")
     userconfig.read_user_config()
 
     def clean_config_file():
         shutil.rmtree(settings_path)
 
     request.addfinalizer(clean_config_file)
-    return userconfig.userconfigfile
+    return userconfig.user_config_file
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def with_new_config(request):
         shutil.rmtree(settings_path)
 
     request.addfinalizer(clean_config_file)
-    return userconfig.userconfigfile
+    return userconfig.user_config_file
 
 
 def test_tlp_settings_recreation(with_broken_config):

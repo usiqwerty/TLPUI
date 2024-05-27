@@ -7,41 +7,41 @@ import gi
 gi.require_version('Gtk', '3.0')
 
 
-def changed_items_dialog(window, tmpfilename: str, dialogtitle: str, message: str) -> Gtk.ResponseType:
+def changed_items_dialog(window, tmp_filename: str, dialog_title: str, message: str) -> Gtk.ResponseType:
     """Dialog to show changed TLP configuration items."""
-    dialog = Gtk.Dialog(dialogtitle, window, 0, (
+    dialog = Gtk.Dialog(dialog_title, window, 0, (
         Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
         Gtk.STOCK_OK, Gtk.ResponseType.OK
     ))
     dialog.set_default_size(400, 300)
 
-    scrolledwindow = Gtk.ScrolledWindow()
-    scrolledwindow.set_hexpand(True)
-    scrolledwindow.set_vexpand(True)
+    scrolled_window = Gtk.ScrolledWindow()
+    scrolled_window.set_hexpand(True)
+    scrolled_window.set_vexpand(True)
 
-    with open(settings.tlpconfigfile, encoding='utf-8') as fromfile:
-        fromfilecontent = fromfile.readlines()
-    with open(tmpfilename, encoding='utf-8') as tofile:
-        tofilecontent = tofile.readlines()
-    diff = settings.tlpbaseconfigfile + '\n\n'
-    for line in difflib.unified_diff(fromfilecontent, tofilecontent, n=0, lineterm=''):
+    with open(settings.tlp_config_file, encoding='utf-8') as fromfile:
+        from_file_content = fromfile.readlines()
+    with open(tmp_filename, encoding='utf-8') as tofile:
+        to_file_content = tofile.readlines()
+    diff = settings.tlp_base_config_file + '\n\n'
+    for line in difflib.unified_diff(from_file_content, to_file_content, n=0, lineterm=''):
         if line.startswith('---') or line.startswith('+++'):
             continue
         postfix = '' if line.startswith('-') else '\n'
         diff += line + postfix
 
-    textbuffer = Gtk.TextBuffer()
-    textbuffer.set_text(diff)
+    text_buffer = Gtk.TextBuffer()
+    text_buffer.set_text(diff)
 
     textview = Gtk.TextView()
-    textview.set_buffer(textbuffer)
+    textview.set_buffer(text_buffer)
     textview.set_editable(False)
 
-    scrolledwindow.add(textview)
-    scrolledwindow.set_border_width(12)
+    scrolled_window.add(textview)
+    scrolled_window.set_border_width(12)
 
     box = dialog.get_content_area()
-    box.pack_start(scrolledwindow, True, True, 0)
+    box.pack_start(scrolled_window, True, True, 0)
     box.pack_start(Gtk.Label(f'\n{message}\n'), False, False, 0)
 
     dialog.show_all()
@@ -53,21 +53,21 @@ def changed_items_dialog(window, tmpfilename: str, dialogtitle: str, message: st
 
 def show_about_dialog(self):
     """Applications about dialog."""
-    aboutdialog = Gtk.AboutDialog()
-    aboutdialog.set_title("TLP-UI")
-    aboutdialog.set_name("name")
-    aboutdialog.set_version(__version__)
-    aboutdialog.set_comments(language.MT_("UI for TLP written in Python/Gtk"))
-    aboutdialog.set_website("https://github.com/d4nj1/TLPUI")
-    aboutdialog.set_website_label("TLP-UI @ GitHub")
-    aboutdialog.set_authors(["Daniel Christophis"])
-    aboutdialog.set_translator_credits("Muhammet Emin AKALAN (05akalan57@gmail.com)")
-    aboutdialog.set_license_type(Gtk.License.GPL_2_0)
-    aboutdialog.set_logo(GdkPixbuf.Pixbuf.new_from_file_at_size(
-        f"{settings.icondir}themeable/hicolor/scalable/apps/tlpui.svg", width=128, height=128)
+    dialog = Gtk.AboutDialog()
+    dialog.set_title("TLP-UI")
+    dialog.set_name("name")
+    dialog.set_version(__version__)
+    dialog.set_comments(language.MT_("UI for TLP written in Python/Gtk"))
+    dialog.set_website("https://github.com/d4nj1/TLPUI")
+    dialog.set_website_label("TLP-UI @ GitHub")
+    dialog.set_authors(["Daniel Christophis"])
+    dialog.set_translator_credits("Muhammet Emin AKALAN (05akalan57@gmail.com)")
+    dialog.set_license_type(Gtk.License.GPL_2_0)
+    dialog.set_logo(GdkPixbuf.Pixbuf.new_from_file_at_size(
+        f"{settings.icon_dir}themeable/hicolor/scalable/apps/tlpui.svg", width=128, height=128)
     )
-    aboutdialog.connect('response', lambda dialog, fata: dialog.destroy())
-    aboutdialog.show_all()
+    dialog.connect('response', lambda dialog, fata: dialog.destroy())
+    dialog.show_all()
 
 
 def show_dialog(error_message) -> None:

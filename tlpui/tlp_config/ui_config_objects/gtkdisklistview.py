@@ -6,7 +6,7 @@ from tlpui import settings
 
 def create_view(configname: str) -> Gtk.Box:
     """Create disk view."""
-    tlpobject = settings.tlpconfig[configname]
+    tlpobject = settings.tlp_config[configname]
     label = Gtk.Label(tlpobject.get_value())
     label.set_width_chars(len(tlpobject.get_value()) + 5)
     return label

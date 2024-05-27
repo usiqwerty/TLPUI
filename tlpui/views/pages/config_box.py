@@ -44,7 +44,7 @@ class ConfigPage(AppPage):
         config_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
         config_box.pack_start(notebook, True, True, 0)
 
-        active_category = settings.userconfig.activecategory
+        active_category = settings.user_config.active_category
         notebook.show_all()
         notebook.set_current_page(active_category)
 

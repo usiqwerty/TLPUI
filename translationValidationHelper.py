@@ -11,8 +11,8 @@ from googletrans import Translator
 def validate_translation(trans: Translator, check_locale: str, language_file: str):
     main_lang = "en"
     main_locale = "en_EN"
-    main_translation_catalog = gettext.translation(domain=language_file, localedir=settings.langdir, languages=[main_locale])._catalog
-    check_translation_catalog = gettext.translation(domain=language_file, localedir=settings.langdir, languages=[check_locale])._catalog
+    main_translation_catalog = gettext.translation(domain=language_file, localedir=settings.lang_dir, languages=[main_locale])._catalog
+    check_translation_catalog = gettext.translation(domain=language_file, localedir=settings.lang_dir, languages=[check_locale])._catalog
 
     differ = difflib.HtmlDiff()
     charset = 'utf-8'
@@ -56,7 +56,7 @@ if len(sys.argv) < 2:
     sys.exit()
 
 locale = sys.argv[1]
-locale_path = Path(f"{settings.langdir}{locale}")
+locale_path = Path(f"{settings.lang_dir}{locale}")
 if not locale_path.exists() and not locale_path.is_dir():
     print(f"Locale folder '{locale_path}' does not exist")
     sys.exit()

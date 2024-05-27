@@ -6,7 +6,7 @@ from tlpui import settings
 
 def create_entry(configname: str) -> Gtk.Entry:
     """Create entry widget."""
-    configvalue = settings.tlpconfig[configname].get_value()
+    configvalue = settings.tlp_config[configname].get_value()
     configvaluelength = len(configvalue)
     if configvaluelength >= 70:
         configvaluelength = 70
@@ -20,4 +20,4 @@ def create_entry(configname: str) -> Gtk.Entry:
 
 def change_entry_text(self: Gtk.Entry, configname: str):
     """Store state change."""
-    settings.tlpconfig[configname].set_value(self.get_text())
+    settings.tlp_config[configname].set_value(self.get_text())

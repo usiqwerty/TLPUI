@@ -29,7 +29,7 @@ def create_item_box(configobjects: list, doc: str, grouptitle: str, window) -> G
         tlpuiobject.set_margin_start(18)
         tlpuiobject.set_margin_end(18)
 
-        if configname not in settings.tlpconfig.keys():
+        if configname not in settings.tlp_config.keys():
             missingcheckbox = Gtk.CheckButton()
             missingcheckbox.set_child_visible(False)
             missingstatetogglebox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
@@ -78,9 +78,9 @@ def create_item_box(configobjects: list, doc: str, grouptitle: str, window) -> G
             tlpconfigbox.pack_start(khzlabel, False, False, 12)
 
         if configname.endswith('_BAT'):
-            tlpconfigbox.pack_start(Gtk.Image.new_from_file(f'{settings.icondir}OnBAT.svg'), False, False, 12)
+            tlpconfigbox.pack_start(Gtk.Image.new_from_file(f'{settings.icon_dir}OnBAT.svg'), False, False, 12)
         elif configname.endswith('_AC'):
-            tlpconfigbox.pack_start(Gtk.Image.new_from_file(f'{settings.icondir}OnAC.svg'), False, False, 12)
+            tlpconfigbox.pack_start(Gtk.Image.new_from_file(f'{settings.icon_dir}OnAC.svg'), False, False, 12)
 
         tlpuiobject.pack_start(statetogglebox, False, False, 0)
         tlpuiobject.pack_start(tlpconfigbox, False, False, 0)

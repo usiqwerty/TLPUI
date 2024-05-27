@@ -16,7 +16,7 @@ global indexstore
 def create_list(configname: str, window: Gtk.Window) -> Gtk.Box:
     """Create usb list button."""
     box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-    label = Gtk.Label(settings.tlpconfig[configname].get_value().replace(" ", "\n"))
+    label = Gtk.Label(settings.tlp_config[configname].get_value().replace(" ", "\n"))
 
     button = Gtk.Button(label=' Edit', image=get_theme_image('edit-symbolic', Gtk.IconSize.BUTTON))
     button.connect('clicked', edit_list, configname, label, window)
@@ -29,7 +29,7 @@ def create_list(configname: str, window: Gtk.Window) -> Gtk.Box:
 
 def edit_list(self, configname: str, usblistlabel: Gtk.Label, window: Gtk.Window):
     """Create usb list view."""
-    tlpobject = settings.tlpconfig[configname]
+    tlpobject = settings.tlp_config[configname]
     usblistpattern = re.compile(r'^.+?([a-f\d]{4}:[a-f\d]{4})(.+?)$')
     currentitems = OrderedDict()
     if tlpobject.get_value() != '':

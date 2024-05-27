@@ -54,7 +54,7 @@ lang_menu_items = [
 
 def switch_language(lang: str, load_tlp_config) -> None:
     """Language switcher."""
-    settings.userconfig.language = lang
+    settings.user_config.language = lang
 
     # reload language values
     importlib.reload(language)
@@ -128,12 +128,12 @@ class MenuBar:
         action_group.add_action(about_dialog_menu)
         about_dialog_menu.connect('activate', show_about_dialog)
 
-        lang_dir = Path(settings.langdir)
+        lang_dir = Path(settings.lang_dir)
         for lang_object in lang_dir.iterdir():
             if lang_object.is_dir():
                 locale = lang_object.name
 
-                if locale == settings.userconfig.language:
+                if locale == settings.user_config.language:
                     action_lang = Gtk.Action(locale, locale, None, Gtk.STOCK_APPLY)
                 else:
                     action_lang = Gtk.Action(locale, locale, None, None)

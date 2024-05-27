@@ -2,10 +2,10 @@
 
 from gi.repository import Gdk
 
-from .config_actions import save_tlp_config, quit_tlp_config
+from tlpui.config_actions import save_tlp_config, quit_tlp_config
 
 
-def window_key_events(self, event) -> None:
+def window_key_events_handler(self, event) -> None:
     """Add window key events like crtl+(q|w|s)."""
     if event.state & Gdk.ModifierType.CONTROL_MASK:
         # close window with ctrl+q or ctrl+w

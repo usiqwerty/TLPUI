@@ -4,6 +4,9 @@ from pathlib import Path
 from shutil import which
 from subprocess import check_output, CalledProcessError
 
+# TODO: maybe it would be better to
+#  import tlpui.views.dialogs (or just show_dialog())
+#  but it turns out into circular import
 import tlpui.views
 
 

@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 import tlpui.config_actions
 import tlpui.tlp_runner
-import tlpui.views.main_box
+import tlpui.views.application
 from tlpui.uihelper import get_theme_image
 from tlpui.config_parser import file
 from tlpui import settings
@@ -15,7 +15,7 @@ from tlpui import settings_loader
 
 def create_list(configname: str, window: Gtk.Window) -> Gtk.Box:
     """Create disk list button."""
-    tlpobject = settings.tlpconfig[configname]
+    tlpobject = settings.tlp_config[configname]
     box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
     label = Gtk.Label(tlpobject.get_value())
     label.set_width_chars(len(tlpobject.get_value()) + 5)
@@ -163,7 +163,7 @@ def get_keep_value(keep: Gtk.CheckButton, value: str):
 
 def set_tlp_value(configname: str, value: str):
     """Store applied config changes."""
-    settings.tlpconfig[configname].set_value(value)
+    settings.tlp_config[configname].set_value(value)
 
 
 def get_disk_values(diskid: str, existingdisks: OrderedDict):
@@ -231,12 +231,12 @@ def create_selectbox(values: str, configvalue: str):
 
 def read_existing_disk_config() -> OrderedDict:
     """Fetch disk config from TLP."""
-    devices = settings.tlpconfig['DISK_DEVICES'].get_value().split(' ')
-    apmlevelonac = settings.tlpconfig['DISK_APM_LEVEL_ON_AC'].get_value().split(' ')
-    apmlevelonbat = settings.tlpconfig['DISK_APM_LEVEL_ON_BAT'].get_value().split(' ')
-    spindowntimeoutonac = settings.tlpconfig['DISK_SPINDOWN_TIMEOUT_ON_AC'].get_value().split(' ')
-    spindowntimeoutonbat = settings.tlpconfig['DISK_SPINDOWN_TIMEOUT_ON_BAT'].get_value().split(' ')
-    iosched = settings.tlpconfig['DISK_IOSCHED'].get_value().split(' ')
+    devices = settings.tlp_config['DISK_DEVICES'].get_value().split(' ')
+    apmlevelonac = settings.tlp_config['DISK_APM_LEVEL_ON_AC'].get_value().split(' ')
+    apmlevelonbat = settings.tlp_config['DISK_APM_LEVEL_ON_BAT'].get_value().split(' ')
+    spindowntimeoutonac = settings.tlp_config['DISK_SPINDOWN_TIMEOUT_ON_AC'].get_value().split(' ')
+    spindowntimeoutonbat = settings.tlp_config['DISK_SPINDOWN_TIMEOUT_ON_BAT'].get_value().split(' ')
+    iosched = settings.tlp_config['DISK_IOSCHED'].get_value().split(' ')
 
     existingdiskconfig = OrderedDict()
     index = 0

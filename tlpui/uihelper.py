@@ -38,7 +38,7 @@ def get_graphical_sudo() -> str:
 
 def get_flag_image(locale: str) -> Gtk.Image:
     """Fetch flag image from icons folder."""
-    flagpixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(f"{settings.icondir}flags/{locale}.png", width=16, height=16)
+    flagpixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(f"{settings.icon_dir}flags/{locale}.png", width=16, height=16)
     return Gtk.Image().new_from_pixbuf(flagpixbuf)
 
 
@@ -46,7 +46,7 @@ def get_theme_image(iconname: str, iconsize: Gtk.IconSize) -> Gtk.Image:
     """Fetch image from theme or return fallback if missing."""
     if Gtk.IconTheme.get_default().has_icon(iconname):
         return Gtk.Image().new_from_icon_name(iconname, iconsize)
-    return Gtk.Image().new_from_file(f"{settings.icondir}themeable/hicolor/scalable/actions/{iconname}.svg")
+    return Gtk.Image().new_from_file(f"{settings.icon_dir}themeable/hicolor/scalable/actions/{iconname}.svg")
 
 
 class StateImage:
