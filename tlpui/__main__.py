@@ -9,7 +9,7 @@ from . import settings
 from .css import get_css_provider
 from tlpui.config_parser.file import init_tlp_file_config
 from .mainui import window_key_events, close_main_window
-from tlpui.views.main_box import create_main_box
+from tlpui.views.main_box import EditorGUI
 
 Gtk.init()
 Gtk.StyleContext.add_provider_for_screen(
@@ -39,10 +39,11 @@ def main() -> None:
 
     # init application window
     window = Gtk.Window()
+    editor_gui = EditorGUI(window)
     window.set_title('Tlp-UI')
     window.set_icon_name('tlpui')
     window.set_default_size(settings.userconfig.windowxsize, settings.userconfig.windowysize)
-    window.add(create_main_box(window))
+    window.add(editor_gui.generate_gtk_box()) #create_main_box(window)
     window.connect('check-resize', store_window_size)
     window.connect('delete-event', close_main_window)
     window.connect('key-press-event', window_key_events)

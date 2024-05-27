@@ -37,7 +37,7 @@ class UserConfig:
     def __init__(self):
         """Init user config class parameters."""
         self.language = "en_EN"
-        self.activeoption = 0
+        self.active_page = 0
         self.activecategory = 0
         self.activeposition = 0
         self.windowxsize = 900
@@ -53,7 +53,7 @@ class UserConfig:
                 config.read_file(configfile)
             try:
                 self.language = config['default']['language']
-                self.activeoption = int(config['default']['activeoption'])
+                self.active_page = int(config['default']['activeoption'])
                 self.activecategory = int(config['default']['activecategory'])
                 self.activeposition = float(config['default']['activeposition'])
                 self.windowxsize = int(config['default']['windowxsize'])
@@ -70,7 +70,7 @@ class UserConfig:
         config = configparser.ConfigParser()
         config['default'] = {}
         config['default']['language'] = self.language
-        config['default']['activeoption'] = str(self.activeoption)
+        config['default']['activeoption'] = str(self.active_page)
         config['default']['activecategory'] = str(self.activecategory)
         config['default']['activeposition'] = str(self.activeposition)
         config['default']['windowxsize'] = str(self.windowxsize)

@@ -1,76 +1,81 @@
 from gi.repository import Gtk
 
 from tlpui import language, settings
-from tlpui.tlp_config.configui import create_config_box
+from tlpui.editor import Editor
+from tlpui.views.pages.config_box import ConfigPage
 from tlpui.config_parser.file import init_tlp_file_config
-from tlpui.views.menu import create_menu_box
-from tlpui.views.statui import create_stat_box
+from tlpui.views.menu import MenuBar
+from tlpui.views.pages.stat_page import StatisticsPage
 from tlpui.views.settings_box import create_settings_box
 
 
-def create_main_box(window: Gtk.Window) -> Gtk.Box:
-    """Create TLP configuration items notebook view."""
-    notebook = Gtk.Notebook()
-    notebook.set_tab_pos(Gtk.PositionType.TOP)
+class EditorGUI:
+    window: Gtk.Window
+    editor: Editor
 
-    menubox = create_menu_box(window, load_tlp_config)
-    settingsbox = create_settings_box(window, load_tlp_config)
-    configbox = create_config_box(window)
+    def __init__(self, gtk_window: Gtk.Window):
+        self.window = gtk_window
 
-    contentbox = create_content_box(configbox, settingsbox)
-    configlabel = Gtk.Label(language.MT_('Configuration'))
-    configlabel.set_hexpand(True)
-    notebook.append_page(contentbox, configlabel)
+    def generate_gtk_box(self) -> Gtk.Box:
+        """Create TLP configuration items notebook view."""
+        main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
 
+        menu = MenuBar(self.window, self.load_tlp_config).create_menu_box()
+        notebook = self.create_notebook()
 
-    statlabel = Gtk.Label(language.MT_('Statistics'))
-    statlabel.set_hexpand(True)
-    statbox = create_stat_box()
-    notebook.append_page(statbox, statlabel)
+        main_box.pack_start(menu, False, False, 0)
+        main_box.pack_start(notebook, True, True, 0)
 
-    mainbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-    mainbox.pack_start(menubox, False, False, 0)
-    mainbox.pack_start(notebook, True, True, 0)
+        return main_box
 
-    notebook.connect('switch-page', store_option_num)
+    def create_notebook(self):
+        notebook = Gtk.Notebook()
+        notebook.set_tab_pos(Gtk.PositionType.TOP)
 
-    notebook.show_all()
-    notebook.set_current_page(settings.userconfig.activeoption)
+        pages = [
+            ConfigPage(self.window),
+            StatisticsPage()
+        ]
+        # config_page = ConfigPage(self.window)
+        # contentbox = config_page.create_content_box(self.load_tlp_config)
+        # configlabel = Gtk.Label(language.MT_('Configuration'))
+        # configlabel.set_hexpand(True)
+        # notebook.append_page(contentbox, configlabel)
+        #
+        # stat_page = StatisticsPage()
+        # statbox = stat_page.create_stat_box()
+        # statlabel = Gtk.Label(language.MT_('Statistics'))
+        # statlabel.set_hexpand(True)
+        # notebook.append_page(statbox, statlabel)
+        #
+        for page in pages:
+            page.append_to_notebook(notebook)
 
-    return mainbox
+        notebook.connect('switch-page', store_option_num)
+        notebook.show_all()
 
+        notebook.set_current_page(settings.userconfig.active_page)
+        return notebook
 
-def create_content_box(configbox, settingsbox):
-    contentbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
-    contentbox.set_margin_top(18)
-    contentbox.set_margin_bottom(18)
-    contentbox.set_margin_left(18)
-    contentbox.set_margin_right(18)
-    contentbox.pack_start(settingsbox, False, False, 0)
-    contentbox.pack_start(configbox, True, True, 0)
-    return contentbox
+    def load_tlp_config(self, reload_tlp_config: bool) -> None:
+        """Load TLP configuration to UI."""
+        if reload_tlp_config:
+            init_tlp_file_config()
+
+        new_main_box = self.generate_gtk_box()  # create_main_box(window)
+        children = self.window.get_children()
+        for child in children:
+            self.window.remove(child)
+        self.window.add(new_main_box)
+        self.window.show_all()
+
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+
+        # reset scroll position
+        settings.active_scroll.get_vadjustment().set_value(settings.userconfig.activeposition)
 
 
 def store_option_num(self, option, option_num: int):
     """Store selected functionality option."""
-    settings.userconfig.activeoption = option_num
-
-
-def load_tlp_config(_, window: Gtk.Window, reloadtlpconfig: bool) -> None:
-    """Load TLP configuration to UI."""
-    if reloadtlpconfig:
-        init_tlp_file_config()
-
-    new_mainbox = create_main_box(window)
-    children = window.get_children()
-    for child in children:
-        window.remove(child)
-    window.add(new_mainbox)
-    window.show_all()
-    while Gtk.events_pending():
-        Gtk.main_iteration()
-
-    #reset scroll position
-    settings.active_scroll.get_vadjustment().set_value(settings.userconfig.activeposition)
-
-
+    settings.userconfig.active_page = option_num

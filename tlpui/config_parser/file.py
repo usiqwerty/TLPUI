@@ -7,7 +7,7 @@ from os import access, W_OK, close, path
 from tempfile import mkstemp
 
 import tlpui.tlp_runner
-from tlpui.tlp_config.config_item import TlpConfigItem, ConfType
+from tlpui.config_parser.types import ConfType, TlpConfigItem
 from tlpui import settings
 from .filehelper import get_yaml_schema_object_from_file, extract_default_tlp_configs, TlpDefaults
 from tlpui.uihelper import get_graphical_sudo
